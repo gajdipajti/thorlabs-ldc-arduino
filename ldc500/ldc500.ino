@@ -1,7 +1,7 @@
 /*
   Laser Diode Controller Controller
   
-  Functions:
+  Main Functions:
     * ENABLE/DISABLE Laser -> Pin 13 + LED
     * SET Laser Current    -> Pin 11
     * GET Laser Current    -> A0
@@ -24,7 +24,7 @@ boolean stringComplete = false;  // whether the string is complete
 
 void setup() {
   pinMode(laserPin, OUTPUT);
-  Serial.begin(9600);
+  Serial.begin(115200);
   // reserve 200 bytes for the inputString:
   inputString.reserve(200);
 }
@@ -47,30 +47,23 @@ void loop() {
         Serial.print("Syntax Error: ");
         Serial.println(inputString);
       }
-//  Current SET/GET
-    } else if (inputString.startsWith("i")) {
-      if (inputString ) {
-        Serial.println(inputString.substring(1));
-      } else if (inputString.substring(1,2) == "?") {
-        int CTLOut = analogRead(laserOut);
-        // Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V):
-        float voltage = CTLOut*(10.0 / 1023.0);
-        float LaserCurrent = voltage/(10.0/500.0);
-        Serial.println(LaserCurrent);
-      } else {
-        Serial.print("Syntax Error: ");
-        Serial.println(inputString);
-      }
-//  Power SET/GET
+//  Current GET
+    } else if (inputString.startsWith("i?")) {
+      int CTLOut = analogRead(laserOut);
+      // Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V):
+      float voltage = CTLOut*(10.0 / 1023.0);
+      float LaserCurrent = voltage/(10.0/500.0);
+      Serial.println(LaserCurrent);
+//  Power GET/SET
     } else if (inputString.startsWith("p")) {
-      if (inputString.substring(1) == "0") {
-        Serial.println(inputString.substring(1));
-      } else if (inputString.substring(1,2) == "?") {
+      if ((inputString.substring(1,2) == "?") || (inputString.substring(1,3) == "a?")) {
         int CTLOut = analogRead(laserOut);
         // Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V):
         float voltage = CTLOut*(10.0 / 1023.0);
         float LaserCurrent = voltage/(10.0/500.0);
         Serial.println(LaserCurrent);
+      } else if (inputString.substring(1) == "0") {
+        Serial.println(inputString.substring(1));
       } else {
         Serial.print("Syntax Error: ");
         Serial.println(inputString);
@@ -105,12 +98,15 @@ void loop() {
           Serial.println(inputString);
         }
 // Serial Number
-    } else if (inputString.substring(0,3) == "sn?") {
+    } else if (inputString.startsWith("sn?")) {
         Serial.println(serialNumber);
 // Working seconds
-    } else if (inputString.substring(0,4) == "hrs?") {
+    } else if (inputString.startsWith("hrs?")) {
         time = millis()/60000.0;
         Serial.println(time);
+// Interlock State
+    } else if (inputString.startsWith("ilk?")) {
+        Serial.println("0");
     } else {
         Serial.print("Syntax Error: ");
         Serial.println(inputString);
@@ -132,8 +128,8 @@ void serialEvent() {
     char inChar = (char)Serial.read(); 
     // add it to the inputString:
     inputString += inChar;
-    // if the incoming character is a newline, set a flag
-    // so the main loop can do something about it:
+    // if the incoming character is a carriage return (ASCII 13),
+    //  set a flag so the main loop can do something about it:
     if (inChar == '\r') {
       stringComplete = true;
     } 
