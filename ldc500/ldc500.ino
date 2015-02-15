@@ -8,9 +8,16 @@
   LDC500 -> k=50mA/V  
 */
 
+#include <dht.h>
+dht DHT;
+
+unsigned long serialNumber = 302432729;
+float time;
+
 const int laserPin = 13;
 const int laserIn  = 11;
 const int laserOut = A0;
+const int dht22Pin =  5;
 
 String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
@@ -25,7 +32,8 @@ void setup() {
 void loop() {
   // get any incoming bytes:
   if (stringComplete) {
-    Serial.println(inputString); 
+//    Serial.println(inputString); 
+//  Laser ENABLE/DISABLE/STATE
     if (inputString.startsWith("l")) {
       if (inputString.substring(1,2) == "0") {
         digitalWrite(laserPin,LOW);
@@ -39,9 +47,10 @@ void loop() {
         Serial.print("Syntax Error: ");
         Serial.println(inputString);
       }
-    } else if (inputString.substring(0,1) == "i") {
-      if (inputString.toFloat() ) {
-        Serial.println(inputString.substring(1).toInt());
+//  Current SET/GET
+    } else if (inputString.startsWith("i")) {
+      if (inputString ) {
+        Serial.println(inputString.substring(1));
       } else if (inputString.substring(1,2) == "?") {
         int CTLOut = analogRead(laserOut);
         // Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V):
@@ -52,8 +61,56 @@ void loop() {
         Serial.print("Syntax Error: ");
         Serial.println(inputString);
       }
-    
-    
+//  Power SET/GET
+    } else if (inputString.startsWith("p")) {
+      if (inputString.substring(1) == "0") {
+        Serial.println(inputString.substring(1));
+      } else if (inputString.substring(1,2) == "?") {
+        int CTLOut = analogRead(laserOut);
+        // Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V):
+        float voltage = CTLOut*(10.0 / 1023.0);
+        float LaserCurrent = voltage/(10.0/500.0);
+        Serial.println(LaserCurrent);
+      } else {
+        Serial.print("Syntax Error: ");
+        Serial.println(inputString);
+      }
+//  DHT22 Sensor TEMP/HUM
+    } else if (inputString.startsWith("d")) {
+        int chk = DHT.read22(dht22Pin);
+        switch (chk) {
+          case DHTLIB_OK:
+            //Serial.print("OK,\t");
+            break;
+          case DHTLIB_ERROR_CHECKSUM:
+            Serial.print("Checksum error,\t");
+            break;
+          case DHTLIB_ERROR_TIMEOUT:
+            Serial.print("Time out error,\t");
+            break;
+          default:
+            Serial.print("Unknown error,\t");
+            break;
+        }
+        if (inputString.substring(1,3) == "t?") {
+          Serial.println(DHT.temperature, 1);
+        } else if (inputString.substring(1,3) == "h?") {
+          Serial.println(DHT.humidity, 1);
+        } else if (inputString.substring(1,2) == "?") {
+          Serial.print(DHT.humidity, 1);
+          Serial.print("; ");
+          Serial.println(DHT.temperature, 1);
+        } else {
+          Serial.print("Syntax Error: ");
+          Serial.println(inputString);
+        }
+// Serial Number
+    } else if (inputString.substring(0,3) == "sn?") {
+        Serial.println(serialNumber);
+// Working seconds
+    } else if (inputString.substring(0,4) == "hrs?") {
+        time = millis()/60000.0;
+        Serial.println(time);
     } else {
         Serial.print("Syntax Error: ");
         Serial.println(inputString);
@@ -62,13 +119,6 @@ void loop() {
     inputString = "";
     stringComplete = false;
   }
-  
-//  int CTLOut = analogRead(laserOut);
-  // Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V):
-//  float voltage = CTLOut*(10.0 / 1023.0);
-//  float LaserCurrent = voltage/(10.0/500.0);
-//  Serial.println(LaserCurrent);
- 
 }
 /*
   SerialEvent occurs whenever a new data comes in the
