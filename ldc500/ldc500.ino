@@ -28,7 +28,7 @@ float kLDC500 = 50.0; // mA/V
 const int laserREM = 13;
 const int laserMod = 11;
 const int laserCTL = A0;
-//const int dht22Pin =  5;
+const int dht22Pin =  8;
 
 String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
