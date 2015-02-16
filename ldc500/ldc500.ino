@@ -50,10 +50,9 @@ void setCurrent(float i) {
 }
 
 float getVoltage() {
-  int ctlOut = analogRead(A0);
+  int ctlOut = analogRead(laserCTL);
   // Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V):
-  Serial.println(analogRead(A0));
-  return ctlOut*(5.0 / 1023.0); // voltage
+  return ctlOut*0.0049; // voltage
 }
 
 float getCurrent() {
