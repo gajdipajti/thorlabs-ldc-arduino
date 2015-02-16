@@ -23,6 +23,8 @@ float time;
 float A=0.69790887;
 float B=21.5804876;
 
+float kLDC500 = 50.0; // mA/V
+
 const int laserPin = 13;
 const int laserIn  = 11;
 const int laserOut = A0;
@@ -42,6 +44,29 @@ void setCurrent(float i) {
   // 5/256 = 0,01953125
   int iDigit = 0;
   analogWrite(laserPin, iDigit);
+}
+
+float getVoltage() {
+  int ctlOut = analogRead(laserOut);
+  // Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V):
+  return ctlOut*(5.0 / 1023.0); // voltage
+}
+
+float getCurrent() {
+  return getVoltage()*kLDC500;
+}
+
+float getPower() {
+  float p = (getCurrent()-B)/A;
+  if ( p > 0 ) return p;
+  else return 0.0;
+}
+
+float toFloat(String s) {
+  char carray[s.length() + 1];            //determine size of the array
+  s.toCharArray(carray, sizeof(carray));  //put readStringinto an array
+  float floatNumber = atof(carray);       //convert the array into a float
+  return floatNumber;
 }
 
 void loop() {
@@ -69,29 +94,16 @@ void loop() {
       }
 //  Drive Current GET
     } else if (inputString.startsWith("i?")) {
-      int CTLOut = analogRead(laserOut);
-      // Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V):
-      float voltage = CTLOut*(10.0 / 1023.0);
-      float LaserCurrent = voltage/(10.0/500.0);
-      Serial.println(LaserCurrent);
+      Serial.println(getCurrent());
 //  Drive Current SET
     } else if (inputString.startsWith("slc")) {
-      char icarray[inputString.substring(3).length() + 1];           //determine size of the array
-      inputString.substring(3).toCharArray(icarray, sizeof(icarray)); //put readStringinto an array
-      float fi = atof(icarray); //convert the array into a float
-      setCurrent(fi);
+      setCurrent(toFloat(inputString.substring(3)));
 //  Power GET/SET
     } else if (inputString.startsWith("p")) {
       if ((inputString.substring(1,2) == "?") || (inputString.substring(1,3) == "a?")) {
-        int CTLOut = analogRead(laserOut);
-        // Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V):
-        float voltage = CTLOut*(10.0 / 1023.0);
-        float LaserCurrent = voltage/(10.0/500.0);
-        Serial.println(LaserCurrent);
+        Serial.println(getPower());
       } else {
-        char pcarray[inputString.substring(1).length() + 1]; //determine size of the array
-        inputString.substring(1).toCharArray(pcarray, sizeof(pcarray)); //put readStringinto an array
-        float fp = atof(pcarray); //convert the array into a float
+        float fp = toFloat(inputString.substring(1));
         float fpi;
         if ( fp < 1.0 )  fpi = A*fp*1000.0+B;
         else             fpi = A*fp+B;
@@ -162,7 +174,7 @@ void serialEvent() {
     // add it to the inputString:
     inputString += inChar;
     // if the incoming character is a carriage return (ASCII 13),
-    //  set a flag so the main loop can do something about it:
+    // set a flag so the main loop can do something about it:
     if (inChar == '\r') {
       stringComplete = true;
     } 
