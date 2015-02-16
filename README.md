@@ -1,5 +1,7 @@
 # thorlabs-ldc-arduino
-Arduino controller for Thorlabs LDC500.
+ * Arduino controller for Thorlabs LDC500.
+ * Serial communication and DHT examples are used.
+ * The String->float conversion: http://forum.arduino.cc/index.php?topic=179666.msg1331654#msg1331654
 
 # Start Here:
  1. Clone the repository to your sketchbook folder.
@@ -33,6 +35,7 @@ Arduino controller for Thorlabs LDC500.
 # DHTlib from 
  * https://github.com/RobTillaart/Arduino/tree/master/libraries/DHTlib
  * http://playground.arduino.cc/Main/LibraryList
+ * https://learn.adafruit.com/dht/connecting-to-a-dhtxx-sensor
 
 Cobolt Laser Documentation
  * http://www.cobolt.se/wp-content/uploads/2014/10/Owners-Manual-05-01_140611.pdf
