@@ -1,5 +1,6 @@
 # thorlabs-ldc-arduino
  * Arduino controller for Thorlabs LDC500.
+ * http://www.thorlabs.de/newgrouppage9.cfm?objectgroup_id=10&pn=LDC205C
  * Serial communication and DHT examples are used.
  * The String->float conversion: http://forum.arduino.cc/index.php?topic=179666.msg1331654#msg1331654
 
@@ -37,6 +38,6 @@
  * http://playground.arduino.cc/Main/LibraryList
  * https://learn.adafruit.com/dht/connecting-to-a-dhtxx-sensor
 
-Cobolt Laser Documentation
+# Cobolt Laser Documentation
  * http://www.cobolt.se/wp-content/uploads/2014/10/Owners-Manual-05-01_140611.pdf
  * Look for communication commands.
