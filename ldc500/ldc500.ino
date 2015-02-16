@@ -14,8 +14,8 @@
   A (slope) = 6,979088703376868e-01 +/- 1,292424325833072e-03
 */
 
-#include <dht.h>
-dht DHT;
+//#include <dht.h>
+//dht DHT;
 
 unsigned long serialNumber = 302432729;
 float time;
@@ -25,30 +25,34 @@ float B=21.5804876;
 
 float kLDC500 = 50.0; // mA/V
 
-const int laserPin = 13;
-const int laserIn  = 11;
-const int laserOut = A0;
-const int dht22Pin =  5;
+const int laserREM = 13;
+const int laserMod = 11;
+const int laserCTL = A0;
+//const int dht22Pin =  5;
 
 String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
 
 void setup() {
-  pinMode(laserPin, OUTPUT);
+  pinMode(laserREM, OUTPUT);
+  pinMode(laserMod, OUTPUT);
   Serial.begin(115200);
   // reserve 200 bytes for the inputString:
   inputString.reserve(200);
 }
 
 void setCurrent(float i) {
-  // 5/256 = 0,01953125
-  int iDigit = 0;
-  analogWrite(laserPin, iDigit);
+  if (i > 100.00) { i = 100.00; }
+  // 255/5 * i/50
+  int iDigit = i*2.55;
+  analogWrite(laserMod, iDigit);
+  Serial.println("OK\r");
 }
 
 float getVoltage() {
-  int ctlOut = analogRead(laserOut);
+  int ctlOut = analogRead(A0);
   // Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V):
+  Serial.println(analogRead(A0));
   return ctlOut*(5.0 / 1023.0); // voltage
 }
 
@@ -76,18 +80,18 @@ void loop() {
 // Status of 4 LEDs
     if (inputString.startsWith("leds?")) {
       // POWER ON + LASER ON + LASER LOCK + ERROR = 1 + 2 + 4 + 8
-      int leds = 1+digitalRead(laserPin)*6;
+      int leds = 1+digitalRead(laserREM)*6;
       Serial.println(leds);
 //  Laser ENABLE/DISABLE/STATE
     } else if (inputString.startsWith("l")) {
       if (inputString.substring(1,2) == "0") {
-        digitalWrite(laserPin,LOW);
+        digitalWrite(laserREM,LOW);
         Serial.println("OK\r");
       } else if (inputString.substring(1,2) == "1") {
-        digitalWrite(laserPin,HIGH);
+        digitalWrite(laserREM,HIGH);
         Serial.println("OK\r");
       } else if (inputString.substring(1,2) == "?") {
-        Serial.println(digitalRead(laserPin));
+        Serial.println(digitalRead(laserREM));
       } else {
         Serial.print("Syntax Error: ");
         Serial.println(inputString);
@@ -111,34 +115,34 @@ void loop() {
         setCurrent(fpi);
       }
 //  DHT22 Sensor TEMP/HUM
-    } else if (inputString.startsWith("d")) {
-        int chk = DHT.read22(dht22Pin);
-        switch (chk) {
-          case DHTLIB_OK:
-            //Serial.print("OK,\t");
-            break;
-          case DHTLIB_ERROR_CHECKSUM:
-            Serial.print("Checksum error,\t");
-            break;
-          case DHTLIB_ERROR_TIMEOUT:
-            Serial.print("Time out error,\t");
-            break;
-          default:
-            Serial.print("Unknown error,\t");
-            break;
-        }
-        if (inputString.substring(1,3) == "t?") {
-          Serial.println(DHT.temperature, 1);
-        } else if (inputString.substring(1,3) == "h?") {
-          Serial.println(DHT.humidity, 1);
-        } else if (inputString.substring(1,2) == "?") {
-          Serial.print(DHT.humidity, 1);
-          Serial.print("; ");
-          Serial.println(DHT.temperature, 1);
-        } else {
-          Serial.print("Syntax Error: ");
-          Serial.println(inputString);
-        }
+//    } else if (inputString.startsWith("d")) {
+//        int chk = DHT.read22(dht22Pin);
+//        switch (chk) {
+//          case DHTLIB_OK:
+//            //Serial.print("OK,\t");
+//            break;
+//          case DHTLIB_ERROR_CHECKSUM:
+//            Serial.print("Checksum error,\t");
+//            break;
+//          case DHTLIB_ERROR_TIMEOUT:
+//            Serial.print("Time out error,\t");
+//            break;
+//          default:
+//            Serial.print("Unknown error,\t");
+//            break;
+//        }
+//        if (inputString.substring(1,3) == "t?") {
+//          Serial.println(DHT.temperature, 1);
+//        } else if (inputString.substring(1,3) == "h?") {
+//          Serial.println(DHT.humidity, 1);
+//        } else if (inputString.substring(1,2) == "?") {
+//          Serial.print(DHT.humidity, 1);
+//          Serial.print("; ");
+//          Serial.println(DHT.temperature, 1);
+//        } else {
+//          Serial.print("Syntax Error: ");
+//          Serial.println(inputString);
+//        }
 // Serial Number
     } else if (inputString.startsWith("sn?")) {
       Serial.println(serialNumber);
