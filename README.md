@@ -4,7 +4,7 @@
  * Serial communication examples are used
  * The String->float conversion: http://forum.arduino.cc/index.php?topic=179666.msg1331654#msg1331654
  * LP Filter: http://sim.okawa-denshi.jp/en/PWMtool.php
- * 
+ * PWM speedup from here: http://playground.arduino.cc/Code/PwmFrequency
 
 # Start Here:
  1. Clone the repository to your sketchbook folder.
