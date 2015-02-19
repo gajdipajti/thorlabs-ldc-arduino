@@ -1,8 +1,10 @@
 # thorlabs-ldc-arduino
  * Arduino controller for Thorlabs LDC500.
  * http://www.thorlabs.de/newgrouppage9.cfm?objectgroup_id=10&pn=LDC205C
- * Serial communication and DHT examples are used.
+ * Serial communication examples are used
  * The String->float conversion: http://forum.arduino.cc/index.php?topic=179666.msg1331654#msg1331654
+ * LP Filter: http://sim.okawa-denshi.jp/en/PWMtool.php
+ * 
 
 # Start Here:
  1. Clone the repository to your sketchbook folder.
@@ -10,7 +12,7 @@
    1. LD REM to pin 13.
    2. MOD IN to pin 11.
    3. CTLOUT to pin a0
- 3. Optionally, connect a DHT22 sensor to pin 5.
+ 3. Calculate the Low-pass filter R&C values from here: http://sim.okawa-denshi.jp/en/PWMtool.php
  4. Burn it to your Arduino.
 
 # Communication with the Controller:
@@ -28,16 +30,10 @@
  * f? -> GET operation fault state (always 0)
  * leds? -> GET led status (1: Power on, 7: Laser on)
 
-# DHT Commands: 
- * d? -> GET humidity & temperature (float; float)
- * dh? -> GET humidity (float)
- * dt? -> GET temperature (float)
-
-# DHTlib from 
- * https://github.com/RobTillaart/Arduino/tree/master/libraries/DHTlib
- * http://playground.arduino.cc/Main/LibraryList
- * https://learn.adafruit.com/dht/connecting-to-a-dhtxx-sensor
-
 # Cobolt Laser Documentation
  * http://www.cobolt.se/wp-content/uploads/2014/10/Owners-Manual-05-01_140611.pdf
  * Look for communication commands.
+
+# Currently used R&C values:
+ * R=5k3 Ohm
+ * C=105
