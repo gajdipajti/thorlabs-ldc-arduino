@@ -5,6 +5,7 @@
  * The String->float conversion: http://forum.arduino.cc/index.php?topic=179666.msg1331654#msg1331654
  * LP Filter: http://sim.okawa-denshi.jp/en/PWMtool.php
  * PWM speedup from here: http://playground.arduino.cc/Code/PwmFrequency
+ * DHTlib, get it from here: http://playground.arduino.cc//Main/DHTLib
 
 # Start Here:
  1. Clone the repository to your sketchbook folder.
@@ -29,6 +30,11 @@
  * ilk? -> GET interlock state (always 0)
  * f? -> GET operation fault state (always 0)
  * leds? -> GET led status (1: Power on, 7: Laser on)
+ 
+# DHT22 Communication:
+ * d? -> GET sensor status (0: error, 1: ok)
+ * dt? -> GET temperature (float)
+ * dh? -> GET humidity (float)
 
 # Cobolt Laser Documentation
  * http://www.cobolt.se/wp-content/uploads/2014/10/Owners-Manual-05-01_140611.pdf
