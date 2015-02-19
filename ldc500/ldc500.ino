@@ -3,7 +3,7 @@
   
   Main Functions:
     * ENABLE/DISABLE Laser -> Pin 13 + LED
-    * SET Laser Current    -> Pin 11
+    * SET Laser Current    -> Pin 11 (Changed to 31 kHz
     * GET Laser Current    -> A0
   LDC205C -> k=50mA/V
   
@@ -36,6 +36,10 @@ boolean stringComplete = false;  // whether the string is complete
 void setup() {
   pinMode(laserREM, OUTPUT);
   pinMode(laserMod, OUTPUT);
+  // Change PWM Frequency for Timer2.
+  // Copied the relevant part from here:
+  // http://playground.arduino.cc/Code/PwmFrequency
+  TCCR2B = TCCR2B & 0b11111000 | 0x01;
   Serial.begin(115200);
   // reserve 200 bytes for the inputString:
   inputString.reserve(200);
