@@ -1,5 +1,5 @@
 # thorlabs-ldc-arduino
- * Arduino controller for Thorlabs LDC500.
+ * Arduino controller for Thorlabs LDC205.
  * http://www.thorlabs.de/newgrouppage9.cfm?objectgroup_id=10&pn=LDC205C
  * Serial communication examples are used
  * The String->float conversion: http://forum.arduino.cc/index.php?topic=179666.msg1331654#msg1331654
