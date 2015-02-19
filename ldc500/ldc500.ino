@@ -39,6 +39,7 @@ void setup() {
   // Change PWM Frequency for Timer2.
   // Copied the relevant part from here:
   // http://playground.arduino.cc/Code/PwmFrequency
+  // f=~31kHZ
   TCCR2B = TCCR2B & 0b11111000 | 0x01;
   Serial.begin(115200);
   // reserve 200 bytes for the inputString:
@@ -46,8 +47,9 @@ void setup() {
 }
 
 void setCurrent(float i) {
-  if (i > 100.00) { i = 100.00; }
-  int iDigit = i*1.97;
+  // Lock to Max.
+  if (i > 100.00) { i = 110.00; }
+  int iDigit = i*1.535;
   analogWrite(laserMod, iDigit);
   Serial.println("OK\r");
 }
@@ -55,7 +57,7 @@ void setCurrent(float i) {
 float getVoltage() {
   int ctlOut = analogRead(laserCTL);
   // Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V):
-  return ctlOut*0.0049; // voltage
+  return ctlOut*0.005; // voltage
 }
 
 float getCurrent() {
