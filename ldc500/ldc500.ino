@@ -5,7 +5,7 @@
     * ENABLE/DISABLE Laser -> Pin 13 + LED
     * SET Laser Current    -> Pin 11
     * GET Laser Current    -> A0
-  LDC500 -> k=50mA/V
+  LDC205C -> k=50mA/V
   
   Linear Regression of dataset: Table1_1, using function: A*x+B
   Weighting Method: No weighting
@@ -43,8 +43,7 @@ void setup() {
 
 void setCurrent(float i) {
   if (i > 100.00) { i = 100.00; }
-  // 255/5 * i/50
-  int iDigit = i*2.55;
+  int iDigit = i*1.97;
   analogWrite(laserMod, iDigit);
   Serial.println("OK\r");
 }
