@@ -1,21 +1,18 @@
 /*
-  Laser Diode Controller Controller
+  A Controller for the Thorlabs LDC205C series equipment.
   
   Main Functions:
     * ENABLE/DISABLE Laser -> Pin 13 + LED
-    * SET Laser Current    -> Pin 11 (Changed to 31 kHz
+    * SET Laser Current    -> Pin 11 (Changed to 31 kHz)
     * GET Laser Current    -> A0
   LDC205C -> k=50mA/V
   
-  Linear Regression of dataset: Table1_1, using function: A*x+B
-  Weighting Method: No weighting
-  From x = 1,083000000000000e+01 to x = 1,127000000000000e+02
+  Commands from Cobolt Gen5.
+  
+  Power fit: P=AI+b
   B (y-intercept) = 2,158048764451327e+01 +/- 8,999878654085594e-02
   A (slope) = 6,979088703376868e-01 +/- 1,292424325833072e-03
 */
-
-//#include <dht.h>
-//dht DHT;
 
 unsigned long serialNumber = 302432729;
 float time;
@@ -36,10 +33,8 @@ boolean stringComplete = false;  // whether the string is complete
 void setup() {
   pinMode(laserREM, OUTPUT);
   pinMode(laserMod, OUTPUT);
-  // Change PWM Frequency for Timer2.
-  // Copied the relevant part from here:
-  // http://playground.arduino.cc/Code/PwmFrequency
-  // f=~31kHZ
+  // Change PWM Frequency for Timer2.  f=~31kHZ
+  // Copied the relevant part from here: http://playground.arduino.cc/Code/PwmFrequency
   TCCR2B = TCCR2B & 0b11111000 | 0x01;
   Serial.begin(115200);
   // reserve 200 bytes for the inputString:
@@ -80,13 +75,12 @@ float toFloat(String s) {
 void loop() {
   // get any incoming bytes:
   if (stringComplete) {
-//    Serial.println(inputString); 
-// Status of 4 LEDs
+  // Status of 4 LEDs
     if (inputString.startsWith("leds?")) {
       // POWER ON + LASER ON + LASER LOCK + ERROR = 1 + 2 + 4 + 8
       int leds = 1+digitalRead(laserREM)*6;
       Serial.println(leds);
-//  Laser ENABLE/DISABLE/STATE
+  //  Laser ENABLE/DISABLE/STATE
     } else if (inputString.startsWith("l")) {
       if (inputString.substring(1,2) == "0") {
         digitalWrite(laserREM,LOW);
@@ -96,9 +90,6 @@ void loop() {
         Serial.println("OK\r");
       } else if (inputString.substring(1,2) == "?") {
         Serial.println(digitalRead(laserREM));
-      } else {
-        Serial.print("Syntax Error: ");
-        Serial.println(inputString);
       }
 //  Drive Current GET
     } else if (inputString.startsWith("i?")) {
@@ -118,35 +109,6 @@ void loop() {
         if (fpi > 100.0) fpi = 100.0;
         setCurrent(fpi);
       }
-//  DHT22 Sensor TEMP/HUM
-//    } else if (inputString.startsWith("d")) {
-//        int chk = DHT.read22(dht22Pin);
-//        switch (chk) {
-//          case DHTLIB_OK:
-//            //Serial.print("OK,\t");
-//            break;
-//          case DHTLIB_ERROR_CHECKSUM:
-//            Serial.print("Checksum error,\t");
-//            break;
-//          case DHTLIB_ERROR_TIMEOUT:
-//            Serial.print("Time out error,\t");
-//            break;
-//          default:
-//            Serial.print("Unknown error,\t");
-//            break;
-//        }
-//        if (inputString.substring(1,3) == "t?") {
-//          Serial.println(DHT.temperature, 1);
-//        } else if (inputString.substring(1,3) == "h?") {
-//          Serial.println(DHT.humidity, 1);
-//        } else if (inputString.substring(1,2) == "?") {
-//          Serial.print(DHT.humidity, 1);
-//          Serial.print("; ");
-//          Serial.println(DHT.temperature, 1);
-//        } else {
-//          Serial.print("Syntax Error: ");
-//          Serial.println(inputString);
-//        }
 // Serial Number
     } else if (inputString.startsWith("sn?")) {
       Serial.println(serialNumber);
@@ -154,10 +116,10 @@ void loop() {
     } else if (inputString.startsWith("hrs?")) {
       time = millis()/60000.0;
       Serial.println(time);
-// Interlock State
+// Interlock State, no real code behind
     } else if (inputString.startsWith("ilk?")) {
       Serial.println("0");
-// Operating fault GET
+// Operating fault GET, no real code behind
     } else if (inputString.startsWith("f?")) {
       Serial.println("0");
     } else {
@@ -170,10 +132,10 @@ void loop() {
   }
 }
 /*
-  SerialEvent occurs whenever a new data comes in the
- hardware serial RX.  This routine is run between each
+ SerialEvent occurs whenever a new data comes in the
+ hardware serial RX. This routine is run between each
  time loop() runs, so using delay inside loop can delay
- response.  Multiple bytes of data may be available.
+ response. Multiple bytes of data may be available.
  */
 void serialEvent() {
   while (Serial.available()) {
@@ -188,5 +150,3 @@ void serialEvent() {
     } 
   }
 }
-
-
