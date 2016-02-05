@@ -12,9 +12,16 @@
   Power fit: P=AI+b
   B (y-intercept) = 2,158048764451327e+01 +/- 8,999878654085594e-02
   A (slope) = 6,979088703376868e-01 +/- 1,292424325833072e-03
+  
+  Undocumented commands:
+  gfv?
+  gfd?
+  gfbd?
+  gcn?
 */
 
-unsigned long serialNumber = 302432729;
+unsigned int serialNumber = 405;
+float versionNumber = 1.1;
 float time;
 
 float A=0.69790887;
@@ -112,6 +119,9 @@ void loop() {
 // Serial Number
     } else if (inputString.startsWith("sn?")) {
       Serial.println(serialNumber);
+// Version Number
+    } else if (inputString.startsWith("ver?")) {
+      Serial.println(versionNumber);
 // Working seconds
     } else if (inputString.startsWith("hrs?")) {
       time = millis()/60000.0;
@@ -122,6 +132,34 @@ void loop() {
 // Operating fault GET, no real code behind
     } else if (inputString.startsWith("f?")) {
       Serial.println("0");
+// Are you there? Returns Ok (undocumented Cobolt command)
+    } else if (inputString.startsWith("?")) {
+      Serial.println("OK");
+// Cobolt controller commands (some are undocumented)
+    } else if (inputString.startsWith("@cob")) {
+      if (inputString.substring(4,5) == "0") {
+        digitalWrite(laserREM,LOW);
+        Serial.println("OK\r");
+      } else if (inputString.substring(4,5) == "1") {
+        // Laser ON after interlock.
+        digitalWrite(laserREM,HIGH);
+        Serial.println("OK\r");
+      } else if (inputString.substring(4,7) == "as?") {
+        // Get autostart enable state.
+        Serial.println("0");
+      } else if (inputString.substring(4,9) == "asdr?") {
+        // Get direct input enable state.
+        Serial.println("0");
+      } else if (inputString.substring(4,9) == "asks?") {
+        // Get key switch state.
+        Serial.println("1");
+      } else if (inputString.substring(4,9) == "asky?") {
+        // Get key switch enable state.
+        Serial.println("1");
+      } else {
+        Serial.print("Syntax Error: ");
+        Serial.println(inputString);
+      }    
     } else {
       Serial.print("Syntax Error: ");
       Serial.println(inputString);
