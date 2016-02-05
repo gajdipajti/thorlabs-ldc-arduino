@@ -124,7 +124,9 @@ void loop() {
       } else if (inputString.substring(1,2) == "?")  {
         if (chk == DHTLIB_OK) Serial.println("1");
         else Serial.println("0");
-        }
+      } else {
+        Serial.print("Syntax Error: ");
+        Serial.println(inputString);
       }
 // Serial Number
     } else if (inputString.startsWith("sn?")) {
