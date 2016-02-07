@@ -14,6 +14,11 @@
   A (slope) = 6,979088703376868e-01 +/- 1,292424325833072e-03
   
   Undocumented commands:
+  rtec1drv?
+  rtec1t?
+  ra?
+  glm?
+  mev?
   gfv?
   gfd?
   gfbd?
@@ -117,7 +122,7 @@ void loop() {
         setCurrent(fpi);
       }
 // Serial Number
-    } else if (inputString.startsWith("sn?")) {
+    } else if (( inputString.startsWith("sn?") ) || (inputString.substring(3,6) == "sn?") ) {
       Serial.println(serialNumber);
 // Version Number
     } else if (inputString.startsWith("ver?")) {
