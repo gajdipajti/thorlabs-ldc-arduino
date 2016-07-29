@@ -31,7 +31,7 @@
  * leds? -> GET led status (1: Power on, 7: Laser on)
 
 # Cobolt Laser Documentation
- * http://www.cobolt.se/wp-content/uploads/2014/10/Owners-Manual-05-01_140611.pdf
+ * http://www.cobolt.se/wp-content/uploads/2016/06/D0106-B_Manual-Cobolt-05-01-Series_June_2016.pdf
  * Look for communication commands.
 
 # Currently used R&C values:
