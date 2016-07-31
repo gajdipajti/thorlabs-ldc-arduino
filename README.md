@@ -1,5 +1,5 @@
 # thorlabs-ldc-arduino
- * Arduino controller for Thorlabs LDC205.
+ * Arduino UNO controller for Thorlabs LDC205.
  * http://www.thorlabs.de/newgrouppage9.cfm?objectgroup_id=10&pn=LDC205C
  * Serial communication examples are used
  * The String->float conversion: http://forum.arduino.cc/index.php?topic=179666.msg1331654#msg1331654
@@ -9,11 +9,11 @@
 # Start Here:
  1. Clone the repository to your sketchbook folder.
  2. Connect the BNC connectors:
-   1. LD REM to pin 13.
+   1. LD REM to pin 13. (Same as the L Led on the board)
    2. MOD IN to pin 11.
-   3. CTLOUT to pin a0
+   3. CTLOUT to pin A0
  3. Calculate the Low-pass filter R&C values from here: http://sim.okawa-denshi.jp/en/PWMtool.php
- 4. Burn it to your Arduino.
+ 4. Burn it to your Arduino UNO.
 
 # Communication with the Controller:
 ## Serial: 115200 8N1
@@ -37,3 +37,8 @@
 # Currently used R&C values:
  * R=5k3 Ohm
  * C=105
+
+# Issuea with Arduino Leonardo:
+ * The board does not handle SerialEvents. [FIX](http://forum.arduino.cc/index.php?topic=150558.msg1131262#msg1131262)
+ * [The board does not have Timer2](http://provideyourown.com/2012/arduino-leonardo-versus-uno-whats-new/):
+   * Timer4 can be used, but a different board design and pins are needed.
