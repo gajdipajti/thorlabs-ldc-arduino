@@ -38,7 +38,7 @@
  * R=5k3 Ohm
  * C=105
 
-# Issuea with Arduino Leonardo:
+# Issues with Arduino Leonardo:
  * The board does not handle SerialEvents. [FIX](http://forum.arduino.cc/index.php?topic=150558.msg1131262#msg1131262)
  * [The board does not have Timer2](http://provideyourown.com/2012/arduino-leonardo-versus-uno-whats-new/):
    * Timer4 can be used, but a different board design and pins are needed.
