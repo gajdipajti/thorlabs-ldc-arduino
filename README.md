@@ -6,6 +6,10 @@
  * LP Filter: http://sim.okawa-denshi.jp/en/PWMtool.php
  * PWM speedup from here: http://playground.arduino.cc/Code/PwmFrequency
 
+# Sort of documentation:
+ * LabView GUI: https://gajdicookbook.wordpress.com/2016/02/07/189/
+ * Controller: https://gajdicookbook.wordpress.com/2015/02/16/arduino-controller-for-thorlabs-ldc200c-series/
+
 # Start Here:
  1. Clone the repository to your sketchbook folder.
  2. Connect the BNC connectors:
