@@ -56,6 +56,9 @@ float D=27.31839;
 float kLDC205 = 50.0; // mA/V
 float kLDC500 = 50.0; // mA/V
 
+// float iConst = 1.535   // for 1 laser driver
+float iConst = 2.1;   // for 2 laser driver
+
 const int laserREM = 13;
 const int laserMod = 11;
 const int laser1CTL = A0;    // 405nm laser in the LDC205
@@ -81,8 +84,7 @@ void setup() {
 void setCurrent(float i) {
   // Lock to Max.
   if (i > 100.00) { i = 110.00; }
-  //int iDigit = i*1.535;  // For one laser
-  int iDigit = i*2.1;      // For two laser
+  int iDigit = i*iConst;
   analogWrite(laserMod, iDigit);
   Serial.println("OK\r");
 }
