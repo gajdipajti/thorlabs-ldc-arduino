@@ -1,17 +1,20 @@
 /*
-  A Controller for the Thorlabs LDC205C series equipment.
+  A Controller for the Thorlabs LDC205C/LDC500 series equipment.
+  LDC205C: https://www.thorlabs.com/thorproduct.cfm?partnumber=LDC205C
+  LDC500:  https://www.thorlabs.com/thorproduct.cfm?partnumber=LDC500
   
   Main Functions:
-    * ENABLE/DISABLE Laser -> Pin 13 + LED
-    * SET Laser Current    -> Pin 11 (Changed to 31 kHz)
-    * GET Laser Current    -> A0
+    * ENABLE/DISABLE Laser  -> Pin 13 + LED
+    * SET Laser Current     -> Pin 11 (Changed to 31 kHz)
+    * GET Laser1 Current    -> A0  -> i?
+    * GET Laser2 Current    -> A1  -> j?
   LDC205C -> k=50mA/V
   
-  Commands from Cobolt Gen5.
+  Commands Cobolt Gen5 style + minor changes for the second laser and the DHT22 sensor.
   
   Power fit: P=AI+b
-  B (y-intercept) = 2,158048764451327e+01 +/- 8,999878654085594e-02
-  A (slope) = 6,979088703376868e-01 +/- 1,292424325833072e-03
+  B1 (y-intercept) = 2,158048764451327e+01 +/- 8,999878654085594e-02
+  A1 (slope) = 6,979088703376868e-01 +/- 1,292424325833072e-03
   
   Undocumented commands:
   rtec1drv?
@@ -23,21 +26,43 @@
   gfd?
   gfbd?
   gcn?
+  
+  Non-cobolt commands for the second laser (+1):
+  j?  -> i?
+  q?  -> p?
+  
+  Note if you need a faster response time, comment out the unwanted code.
 */
+// Please clone DHTlib from: https://github.com/RobTillaart/Arduino.git
+// Copy DHTlib to ~/sketchbook/libraries.
+// If you need help with this, please contact me!
+#include <dht.h>    //DHT
+dht DHT;            //DHT
+// NOTE: If you don't want to use a DHT sensor, just comment out the DHT parts
 
-unsigned int serialNumber = 405;
-float versionNumber = 1.1;
+unsigned int serialNumber = 855; // Just 405+450. Just don't think about it.
+float versionNumber = 2.0;       // Merge DHT code, and the second laser.
 float time;
 
+// 405nm laser in the LDC205
 float A=0.69790887;
 float B=21.5804876;
 
+// 450nm laser in the LDC500
+float C=0.69790887;
+float D=21.5804876;
+
+// They both use the same modulation coefficient, but it is better to keep them separated.
+float kLDC205 = 50.0; // mA/V
 float kLDC500 = 50.0; // mA/V
 
 const int laserREM = 13;
 const int laserMod = 11;
-const int laserCTL = A0;
+const int laser1CTL = A0;    // 405nm laser in the LDC205
+const int laser2CTL = A1;    // 450nm laser in the LDC500
 const int dht22Pin =  8;
+
+boolean interlock = false;   // for future interlock feature
 
 String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
@@ -61,18 +86,34 @@ void setCurrent(float i) {
   Serial.println("OK\r");
 }
 
-float getVoltage() {
-  int ctlOut = analogRead(laserCTL);
+float getVoltage1() {
+  int ctlOut = analogRead(laser1CTL);
   // Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V):
   return ctlOut*0.005; // voltage
 }
 
-float getCurrent() {
-  return getVoltage()*kLDC500;
+float getVoltage2() {
+  int ctlOut = analogRead(laser2CTL);
+  // Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V):
+  return ctlOut*0.005; // voltage
 }
 
-float getPower() {
-  float p = (getCurrent()-B)/A;
+float getCurrent1() {
+  return getVoltage1()*kLDC205;
+}
+
+float getCurrent2() {
+  return getVoltage2()*kLDC500;
+}
+
+float getPower1() {
+  float p = (getCurrent1()-B)/A;
+  if ( p > 0 ) return p;
+  else return 0.0;
+}
+
+float getPower2() {
+  float p = (getCurrent1()-D)/C;
   if ( p > 0 ) return p;
   else return 0.0;
 }
@@ -103,16 +144,19 @@ void loop() {
       } else if (inputString.substring(1,2) == "?") {
         Serial.println(digitalRead(laserREM));
       }
-//  Drive Current GET
+//  Drive Current GET1
     } else if (inputString.startsWith("i?")) {
-      Serial.println(getCurrent());
+      Serial.println(getCurrent1());
+//  Drive Current GET2
+    } else if (inputString.startsWith("j?")) {
+      Serial.println(getCurrent2());
 //  Drive Current SET
     } else if (inputString.startsWith("slc")) {
       setCurrent(toFloat(inputString.substring(3)));
 //  Power GET/SET
     } else if (inputString.startsWith("p")) {
       if ((inputString.substring(1,2) == "?") || (inputString.substring(1,3) == "a?")) {
-        Serial.println(getPower());
+        Serial.println(getPower1());
       } else {
         float fp = toFloat(inputString.substring(1));
         float fpi;
@@ -121,6 +165,25 @@ void loop() {
         if (fpi > 100.0) fpi = 100.0;
         setCurrent(fpi);
       }
+//  Power GET2
+    } else if (inputString.startsWith("q")) {
+      if ((inputString.substring(1,2) == "?") || (inputString.substring(1,3) == "a?")) {
+        Serial.println(getPower1());
+      }
+// DHT22 Sensor TEMP/HUM
+    } else if (inputString.startsWith("d")) {            //DHT
+      int chk = DHT.read22(dht22Pin);                    //DHT
+      if (inputString.substring(1,3) == "t?") {          //DHT
+        Serial.println(DHT.temperature, 1);              //DHT
+      } else if (inputString.substring(1,3) == "h?") {   //DHT
+        Serial.println(DHT.humidity, 1);                 //DHT
+      } else if (inputString.substring(1,2) == "?")  {   //DHT
+        if (chk == DHTLIB_OK) Serial.println("1");       //DHT
+        else Serial.println("0");                        //DHT
+      } else {                                           //DHT
+        Serial.print("Syntax Error: ");                  //DHT
+        Serial.println(inputString);                     //DHT
+      }                                                  //DHT
 // Serial Number
     } else if (( inputString.startsWith("sn?") ) || (inputString.substring(3,6) == "sn?") ) {
       Serial.println(serialNumber);
@@ -133,8 +196,8 @@ void loop() {
       Serial.println(time);
 // Interlock State, no real code behind
     } else if (inputString.startsWith("ilk?")) {
-      Serial.println("0");
-// Operating fault GET, no real code behind
+      (interlock) ? Serial.println("1") : Serial.println("0");
+// Operating fault GET, no hardware implementation behind
     } else if (inputString.startsWith("f?")) {
       Serial.println("0");
 // Are you there? Returns Ok (undocumented Cobolt command)
