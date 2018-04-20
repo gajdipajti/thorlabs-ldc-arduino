@@ -49,8 +49,8 @@ float A=0.69790887;
 float B=21.5804876;
 
 // 450nm laser in the LDC500
-float C=0.69790887;
-float D=21.5804876;
+float C=0.873;
+float D=27.31839;
 
 // They both use the same modulation coefficient, but it is better to keep them separated.
 float kLDC205 = 50.0; // mA/V
@@ -81,7 +81,8 @@ void setup() {
 void setCurrent(float i) {
   // Lock to Max.
   if (i > 100.00) { i = 110.00; }
-  int iDigit = i*1.535;
+  //int iDigit = i*1.535;  // For one laser
+  int iDigit = i*2.1;      // For two laser
   analogWrite(laserMod, iDigit);
   Serial.println("OK\r");
 }
@@ -113,7 +114,7 @@ float getPower1() {
 }
 
 float getPower2() {
-  float p = (getCurrent1()-D)/C;
+  float p = (getCurrent2()-D)/C;
   if ( p > 0 ) return p;
   else return 0.0;
 }
@@ -160,7 +161,7 @@ void loop() {
       } else {
         float fp = toFloat(inputString.substring(1));
         float fpi;
-        if ( fp < 1.0 )  fpi = A*fp*1000.0+B;
+        if ( fp < 1.0 )  fpi = 0; // If power set to zero, set the current to zero.
         else             fpi = A*fp+B;
         if (fpi > 100.0) fpi = 100.0;
         setCurrent(fpi);
@@ -168,7 +169,7 @@ void loop() {
 //  Power GET2
     } else if (inputString.startsWith("q")) {
       if ((inputString.substring(1,2) == "?") || (inputString.substring(1,3) == "a?")) {
-        Serial.println(getPower1());
+        Serial.println(getPower2());
       }
 // DHT22 Sensor TEMP/HUM
     } else if (inputString.startsWith("d")) {            //DHT
@@ -256,3 +257,4 @@ void serialEvent() {
     } 
   }
 }
+
