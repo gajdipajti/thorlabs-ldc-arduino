@@ -9,14 +9,17 @@
  * DHTlib, get it from here: http://playground.arduino.cc//Main/DHTLib
 
 # Sort of documentation:
- * LabView GUI: https://gajdicookbook.wordpress.com/2016/02/07/189/
-   * Rewrite to a GPLv2 version in progress. (The current one uses the Cobolt libs.)
+ * LabView GUI ver 1.0: https://gajdicookbook.wordpress.com/2016/02/07/189/
+   * Rewritten to a Cobolt subVI free version. Updated to ver 2.0.
+   * The Project and a build is also included.
  * Controller: https://gajdicookbook.wordpress.com/2015/02/16/arduino-controller-for-thorlabs-ldc200c-series/
 
 ## Changelog:
  * Merged the DHT22 temperature code, from the branch.
  * Added a second _read only_ output for the LDC500 (we got a new laser, which has to be controlled).
-   * I updated the serial number to 855 (405+450). And the version to 2.0. (This will be handled by the GUI.)
+   * I updated the serial number to 855 (405+450). And the version to 2.0.
+ * De-blobbed the previous LabView GUI, and included in this repository.
+ * There is also a build.
 
 # Start Here:
  1. Clone the repository to your sketchbook folder.
@@ -66,3 +69,7 @@
  * The board does not handle SerialEvents. [FIX](http://forum.arduino.cc/index.php?topic=150558.msg1131262#msg1131262)
  * [The board does not have Timer2](http://provideyourown.com/2012/arduino-leonardo-versus-uno-whats-new/):
    * Timer4 can be used, but a different board design and pins are needed.
+
+# Graphical User Interface in LabView 14.
+
+![](./UI.png)
