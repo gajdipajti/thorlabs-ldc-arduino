@@ -51,7 +51,7 @@
 				<Property Name="Bld_localDestDirType" Type="Str">relativeToProject</Property>
 				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
 				<Property Name="Bld_previewCacheID" Type="Str">{5D7B6DC0-C916-4991-B707-E575A5A2EBB5}</Property>
-				<Property Name="Bld_version.build" Type="Int">6</Property>
+				<Property Name="Bld_version.build" Type="Int">7</Property>
 				<Property Name="Bld_version.major" Type="Int">1</Property>
 				<Property Name="Destination[0].destName" Type="Str">Coherent 488GUI.exe</Property>
 				<Property Name="Destination[0].path" Type="Path">../builds/Coherent 488GUI.exe</Property>

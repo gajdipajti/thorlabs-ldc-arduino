@@ -51,7 +51,7 @@
 				<Property Name="Bld_previewCacheID" Type="Str">{BC4A0212-B70C-4A3A-A9FD-8A369A54F07A}</Property>
 				<Property Name="Bld_supportedLanguage[0]" Type="Str">English</Property>
 				<Property Name="Bld_supportedLanguageCount" Type="Int">1</Property>
-				<Property Name="Bld_version.build" Type="Int">19</Property>
+				<Property Name="Bld_version.build" Type="Int">21</Property>
 				<Property Name="Bld_version.major" Type="Int">2</Property>
 				<Property Name="Destination[0].destName" Type="Str">LDC205.exe</Property>
 				<Property Name="Destination[0].path" Type="Path">../build/LDC205.exe</Property>
