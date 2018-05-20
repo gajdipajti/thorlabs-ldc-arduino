@@ -1,4 +1,17 @@
-# thorlabs-ldc-arduino
+# Two projects inside one github repository:
+ * Coherent Sapphire 488mW Laser GUI written in LabView
+ * Thorlabs LDC Arduino controller and a GUI written in LabView
+
+## Coherent Sapphire 488mW GUI:
+
+[Our team](http://titan.physx.u-szeged.hu/~adoptim/) got a Coherent Sapphire 488nm laser with the LP USB CDRH Driver Unit. This means, it can be only controlled via RS-232. So I wrote a similar GUI as the Arduino LDC205 one, but with advanced internals (STATES). It can be used with any Coherent Lasers as far as I know, because during startup it will check for minimum and maximum laser power values.
+
+### Changelog:
+ * Initial release with states.
+ * It searches for a config file: _Documents\LabVIEW Data\LaserControlSettings.ini_
+ * There is also a build.
+
+## thorlabs-ldc-arduino the arduino code for a laser driver.
  * Arduino UNO R3 controller for Thorlabs LDC205, and LDC500.
    * You can split the MOD IN output to control both lasers with the same modulation. (We don't use both lasers at the same time.)
  * http://www.thorlabs.de/newgrouppage9.cfm?objectgroup_id=10&pn=LDC205C
@@ -8,20 +21,21 @@
  * PWM speedup from here: http://playground.arduino.cc/Code/PwmFrequency
  * DHTlib, get it from here: http://playground.arduino.cc//Main/DHTLib
 
-# Sort of documentation:
- * LabView GUI ver 1.0: https://gajdicookbook.wordpress.com/2016/02/07/189/
+### Sort of documentation:
+ * LabView GUI for LDC205 ver 1.0: https://gajdicookbook.wordpress.com/2016/02/07/189/
    * Rewritten to a Cobolt subVI free version. Updated to ver 2.0.
    * The Project and a build is also included.
  * Controller: https://gajdicookbook.wordpress.com/2015/02/16/arduino-controller-for-thorlabs-ldc200c-series/
 
-## Changelog:
+### Changelog for the thorlabs-ldc-arduino & GUI:
  * Merged the DHT22 temperature code, from the branch.
  * Added a second _read only_ output for the LDC500 (we got a new laser, which has to be controlled).
    * I updated the serial number to 855 (405+450). And the version to 2.0.
  * De-blobbed the previous LabView GUI, and included in this repository.
+ * It searches for a config file: _Documents\LabVIEW Data\LaserControlSettings.ini_
  * There is also a build.
 
-# Start Here:
+# Start Here for the Arduino Controller:
  1. Clone the repository to your sketchbook folder.
  2. Connect the BNC connectors:
    * LD REM to pin 13. (Same as the L Led on the board)
@@ -60,6 +74,7 @@
    * Look for communication commands.
  * Thorlabs: https://www.thorlabs.com/thorproduct.cfm?partnumber=LDC205C
  * Thorlabs: https://www.thorlabs.com/thorproduct.cfm?partnumber=LDC500
+ * Coherent: I have the Operator's Manual on paper.
 
 # Currently used R&C values:
  * R=5k3 Ohm
