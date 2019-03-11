@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='UTF-8'?>
-<Project Type="Project" LVVersion="14008000">
+<Project Type="Project" LVVersion="17008000">
 	<Item Name="My Computer" Type="My Computer">
 		<Property Name="server.app.propertiesEnabled" Type="Bool">true</Property>
 		<Property Name="server.control.propertiesEnabled" Type="Bool">true</Property>
@@ -51,7 +51,7 @@
 				<Property Name="Bld_previewCacheID" Type="Str">{BC4A0212-B70C-4A3A-A9FD-8A369A54F07A}</Property>
 				<Property Name="Bld_supportedLanguage[0]" Type="Str">English</Property>
 				<Property Name="Bld_supportedLanguageCount" Type="Int">1</Property>
-				<Property Name="Bld_version.build" Type="Int">21</Property>
+				<Property Name="Bld_version.build" Type="Int">22</Property>
 				<Property Name="Bld_version.major" Type="Int">2</Property>
 				<Property Name="Destination[0].destName" Type="Str">LDC205.exe</Property>
 				<Property Name="Destination[0].path" Type="Path">../build/LDC205.exe</Property>
@@ -62,7 +62,7 @@
 				<Property Name="Destination[1].path" Type="Path">../build/data</Property>
 				<Property Name="Destination[1].path.type" Type="Str">relativeToProject</Property>
 				<Property Name="DestinationCount" Type="Int">2</Property>
-				<Property Name="Source[0].itemID" Type="Str">{67C12B4D-3AE0-4B20-9411-68AC49722517}</Property>
+				<Property Name="Source[0].itemID" Type="Str">{24871F66-A458-4532-BBDC-DA8B0D90C0ED}</Property>
 				<Property Name="Source[0].type" Type="Str">Container</Property>
 				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
 				<Property Name="Source[1].itemID" Type="Ref">/My Computer/ArduinoLDCGUI.vi</Property>
@@ -85,7 +85,7 @@
 				<Property Name="TgtF_companyName" Type="Str">Advanced Optical Imaging Group</Property>
 				<Property Name="TgtF_fileDescription" Type="Str">Arduino LDC205 GUI for 405nm and 450nm</Property>
 				<Property Name="TgtF_internalName" Type="Str">Arduino LDC205 GUI for 405nm</Property>
-				<Property Name="TgtF_legalCopyright" Type="Str">Copyright © 2018 University of Szeged</Property>
+				<Property Name="TgtF_legalCopyright" Type="Str">Copyright © 2019 University of Szeged</Property>
 				<Property Name="TgtF_productName" Type="Str">Arduino LDC205 GUI</Property>
 				<Property Name="TgtF_targetfileGUID" Type="Str">{B4413C9E-BA17-4E53-98E1-73F50CDCA6D2}</Property>
 				<Property Name="TgtF_targetfileName" Type="Str">LDC205.exe</Property>
