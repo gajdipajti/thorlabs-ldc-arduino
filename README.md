@@ -9,7 +9,7 @@
  * There is also a build.
  * Create the second arduino driver: ldc500sh
 
-# Graphical User Interface in LabView 14.
+# Graphical User Interface in LabView 2014 (now it is updated to 2017).
 ![](./UI.png)
 
 # Coherent Sapphire 488mW GUI:
@@ -58,7 +58,6 @@ We have a Thorlabs LDC205C which controls a Nichia 405nm laser diode. To control
 Recently we installed a 637nm laser into a second laser head which is controlled by a LDC500. To control the diode current an Arduino's PWM output is driven at 31kHZ and converted to 0-10V region. This is then LowPass filtered. This Arduino UNO R3 and board can be used to create diode currents from 0mA to 400mA, read back the diode current, and control a solenoid shutter.
  * Arduino UNO R3 controller for [Thorlabs LDC500](https://www.thorlabs.de/thorproduct.cfm?partnumber=LDC500).
  * [Simulation](http://www.falstad.com/circuit/circuitjs.html?cct=$+1+0.000005+10.20027730826997+29+5+43%0Ar+0+128+48+128+0+10000%0Ar+0+32+0+128+0+10000%0Ar+-160+144+-32+144+0+10000%0Ar+80+112+144+112+0+1000%0Ar+192+112+192+208+0+10000%0Ad+-144+32+-144+80+2+default%0Ad+-128+80+-128+32+2+default%0Ad+-112+32+-112+80+2+default%0Ad+-96+80+-96+32+2+default%0Aw+-144+80+-128+80+0%0Aw+-128+32+-112+32+0%0Aw+-112+80+-96+80+0%0Aw+-96+32+0+32+0%0At+-32+144+0+144+0+1+0.5735729797720364+0.6114101312853065+160%0Ag+0+208+0+272+0%0Aw+0+160+0+192+0%0AR+-144+32+-192+32+0+0+40+12+0+0+0.5%0AR+-160+144+-192+144+4+5+1000+5+0+0+0.7822%0At+48+128+80+128+0+1+-8.636823909212664+0.037837152566076566+100%0Aw+0+32+32+32+0%0Ac+144+112+144+208+0+0.000009999999999999999+6.134599156316293%0Aw+144+112+192+112+0%0Aw+144+208+192+208+0%0Aw+80+208+0+208+0%0Aw+0+192+0+208+0%0A368+32+32+32+-32+0+0%0Aw+80+144+80+208+0%0A368+192+112+224+112+0+0%0A174+32+32+128+48+0+1000+0.5+Resistance%0Aw+80+112+80+48+0%0Aw+80+208+144+208+0%0Ao+27+64+0+4099+10+12.8+0+2+27+3%0Ao+25+64+0+4099+20+12.8+1+2+25+3%0A38+17+3+1+1000+Frequency%0A38+17+5+1+100+Duty%5CsCycle%0A)
- * 
 
 ### Start Here for the Arduino Controller LDC500 edition:
  1. Clone the repository to your sketchbook folder.
