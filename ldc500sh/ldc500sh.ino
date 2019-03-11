@@ -17,7 +17,6 @@
 // Variables and constants fot the GUI
 unsigned int serialNumber = 637; // Just a check in the GUI.
 float versionNumber = 2.1;       // Code for different laser with shutter.
-float time;
 
 // Modulation coeff. from datasheet.
 float kLDC = 50.0; // mA/V
@@ -47,7 +46,6 @@ void setup() {
   Serial.begin(115200);
   pinMode(laserSH, OUTPUT);
   pinMode(laserMod, OUTPUT);
-  digitalWrite(laserSH, LOW);
 //  while (!Serial) {
 //    ; // wait for serial port to connect. Needed for native USB
 //  }
@@ -131,8 +129,13 @@ void loop() {
       Serial.println(versionNumber);
     // Working seconds
     } else if (inputString.startsWith("hrs?")) {
-      time = millis()/60000.0;
-      Serial.println(time);
+      long timeNow = millis();
+      int hrs = timeNow/3600000;
+      float mnt = (timeNow % 3600000) / 60000.0;
+      Serial.print(hrs);
+      Serial.print(":");
+      if (mnt<10) Serial.print("0"); // leading zero for minutes
+      Serial.println(mnt);
     // Are you there? Returns Ok (undocumented Cobolt command)
     } else if (inputString.startsWith("?")) {
       Serial.println("OK");
