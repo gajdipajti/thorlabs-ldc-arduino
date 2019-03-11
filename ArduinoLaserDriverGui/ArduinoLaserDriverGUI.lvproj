@@ -10,6 +10,7 @@
 		<Property Name="server.vi.callsEnabled" Type="Bool">true</Property>
 		<Property Name="server.vi.propertiesEnabled" Type="Bool">true</Property>
 		<Property Name="specify.custom.address" Type="Bool">false</Property>
+		<Item Name="ArduinoLDC500GUI.vi" Type="VI" URL="../ArduinoLDC500GUI.vi"/>
 		<Item Name="ArduinoLDCGUI.vi" Type="VI" URL="../ArduinoLDCGUI.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
@@ -45,24 +46,24 @@
 				<Property Name="Bld_excludeInlineSubVIs" Type="Bool">true</Property>
 				<Property Name="Bld_excludeLibraryItems" Type="Bool">true</Property>
 				<Property Name="Bld_excludePolymorphicVIs" Type="Bool">true</Property>
-				<Property Name="Bld_localDestDir" Type="Path">../build</Property>
+				<Property Name="Bld_localDestDir" Type="Path">../build/Arduino LDC205 GUI for 405nm</Property>
 				<Property Name="Bld_localDestDirType" Type="Str">relativeToProject</Property>
 				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
 				<Property Name="Bld_previewCacheID" Type="Str">{BC4A0212-B70C-4A3A-A9FD-8A369A54F07A}</Property>
 				<Property Name="Bld_supportedLanguage[0]" Type="Str">English</Property>
 				<Property Name="Bld_supportedLanguageCount" Type="Int">1</Property>
-				<Property Name="Bld_version.build" Type="Int">22</Property>
+				<Property Name="Bld_version.build" Type="Int">25</Property>
 				<Property Name="Bld_version.major" Type="Int">2</Property>
 				<Property Name="Destination[0].destName" Type="Str">LDC205.exe</Property>
-				<Property Name="Destination[0].path" Type="Path">../build/LDC205.exe</Property>
+				<Property Name="Destination[0].path" Type="Path">../build/Arduino LDC205 GUI for 405nm/LDC205.exe</Property>
 				<Property Name="Destination[0].path.type" Type="Str">relativeToProject</Property>
 				<Property Name="Destination[0].preserveHierarchy" Type="Bool">true</Property>
 				<Property Name="Destination[0].type" Type="Str">App</Property>
 				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
-				<Property Name="Destination[1].path" Type="Path">../build/data</Property>
+				<Property Name="Destination[1].path" Type="Path">../build/Arduino LDC205 GUI for 405nm/data</Property>
 				<Property Name="Destination[1].path.type" Type="Str">relativeToProject</Property>
 				<Property Name="DestinationCount" Type="Int">2</Property>
-				<Property Name="Source[0].itemID" Type="Str">{24871F66-A458-4532-BBDC-DA8B0D90C0ED}</Property>
+				<Property Name="Source[0].itemID" Type="Str">{199141AA-D2D0-4F8B-9FEE-00D0A90E8BC3}</Property>
 				<Property Name="Source[0].type" Type="Str">Container</Property>
 				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
 				<Property Name="Source[1].itemID" Type="Ref">/My Computer/ArduinoLDCGUI.vi</Property>
@@ -85,10 +86,63 @@
 				<Property Name="TgtF_companyName" Type="Str">Advanced Optical Imaging Group</Property>
 				<Property Name="TgtF_fileDescription" Type="Str">Arduino LDC205 GUI for 405nm and 450nm</Property>
 				<Property Name="TgtF_internalName" Type="Str">Arduino LDC205 GUI for 405nm</Property>
-				<Property Name="TgtF_legalCopyright" Type="Str">Copyright © 2019 University of Szeged</Property>
+				<Property Name="TgtF_legalCopyright" Type="Str">Copyright © 2018 University of Szeged</Property>
 				<Property Name="TgtF_productName" Type="Str">Arduino LDC205 GUI</Property>
 				<Property Name="TgtF_targetfileGUID" Type="Str">{B4413C9E-BA17-4E53-98E1-73F50CDCA6D2}</Property>
 				<Property Name="TgtF_targetfileName" Type="Str">LDC205.exe</Property>
+			</Item>
+			<Item Name="Arduino LDC500 GUI for 635nm" Type="EXE">
+				<Property Name="App_copyErrors" Type="Bool">true</Property>
+				<Property Name="App_INI_aliasGUID" Type="Str">{1B6207E7-4A2E-49F8-B796-516B18AA2573}</Property>
+				<Property Name="App_INI_GUID" Type="Str">{F398C72E-72D5-47F0-8AF7-EF51E0C3B535}</Property>
+				<Property Name="App_serverConfig.httpPort" Type="Int">8002</Property>
+				<Property Name="Bld_autoIncrement" Type="Bool">true</Property>
+				<Property Name="Bld_buildCacheID" Type="Str">{4D6C7EDA-18F7-40CE-83DA-B4FD59FE6E22}</Property>
+				<Property Name="Bld_buildSpecDescription" Type="Str">Free build under GPLv2</Property>
+				<Property Name="Bld_buildSpecName" Type="Str">Arduino LDC500 GUI for 635nm</Property>
+				<Property Name="Bld_excludeInlineSubVIs" Type="Bool">true</Property>
+				<Property Name="Bld_excludeLibraryItems" Type="Bool">true</Property>
+				<Property Name="Bld_excludePolymorphicVIs" Type="Bool">true</Property>
+				<Property Name="Bld_localDestDir" Type="Path">../build/Arduino LDC500 GUI for 635nm</Property>
+				<Property Name="Bld_localDestDirType" Type="Str">relativeToProject</Property>
+				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
+				<Property Name="Bld_previewCacheID" Type="Str">{D0BF378B-FD1F-4456-9AEB-15058AF24F4C}</Property>
+				<Property Name="Bld_version.build" Type="Int">9</Property>
+				<Property Name="Bld_version.major" Type="Int">1</Property>
+				<Property Name="Destination[0].destName" Type="Str">Arduino LDC500 635nm.exe</Property>
+				<Property Name="Destination[0].path" Type="Path">../build/Arduino LDC500 GUI for 635nm/Arduino LDC500 635nm.exe</Property>
+				<Property Name="Destination[0].path.type" Type="Str">relativeToProject</Property>
+				<Property Name="Destination[0].preserveHierarchy" Type="Bool">true</Property>
+				<Property Name="Destination[0].type" Type="Str">App</Property>
+				<Property Name="Destination[1].destName" Type="Str">Support Directory</Property>
+				<Property Name="Destination[1].path" Type="Path">../build/Arduino LDC500 GUI for 635nm/data</Property>
+				<Property Name="Destination[1].path.type" Type="Str">relativeToProject</Property>
+				<Property Name="DestinationCount" Type="Int">2</Property>
+				<Property Name="Source[0].itemID" Type="Str">{199141AA-D2D0-4F8B-9FEE-00D0A90E8BC3}</Property>
+				<Property Name="Source[0].type" Type="Str">Container</Property>
+				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[1].itemID" Type="Ref">/My Computer/ArduinoLDC500GUI.vi</Property>
+				<Property Name="Source[1].properties[0].type" Type="Str">Show menu bar</Property>
+				<Property Name="Source[1].properties[0].value" Type="Bool">false</Property>
+				<Property Name="Source[1].properties[1].type" Type="Str">Show vertical scroll bar</Property>
+				<Property Name="Source[1].properties[1].value" Type="Bool">false</Property>
+				<Property Name="Source[1].properties[2].type" Type="Str">Show horizontal scroll bar</Property>
+				<Property Name="Source[1].properties[2].value" Type="Bool">false</Property>
+				<Property Name="Source[1].properties[3].type" Type="Str">Show toolbar</Property>
+				<Property Name="Source[1].properties[3].value" Type="Bool">false</Property>
+				<Property Name="Source[1].properties[4].type" Type="Str">Allow debugging</Property>
+				<Property Name="Source[1].properties[4].value" Type="Bool">false</Property>
+				<Property Name="Source[1].propertiesCount" Type="Int">5</Property>
+				<Property Name="Source[1].sourceInclusion" Type="Str">TopLevel</Property>
+				<Property Name="Source[1].type" Type="Str">VI</Property>
+				<Property Name="SourceCount" Type="Int">2</Property>
+				<Property Name="TgtF_companyName" Type="Str">University of Szeged</Property>
+				<Property Name="TgtF_fileDescription" Type="Str">Arduino LDC500 GUI for 635nm</Property>
+				<Property Name="TgtF_internalName" Type="Str">Arduino LDC500 GUI for 635nm</Property>
+				<Property Name="TgtF_legalCopyright" Type="Str">Copyright © 2018 University of Szeged</Property>
+				<Property Name="TgtF_productName" Type="Str">Arduino LDC500 GUI for 635nm</Property>
+				<Property Name="TgtF_targetfileGUID" Type="Str">{17D835E3-A9F1-43A7-8901-29326D97C8F8}</Property>
+				<Property Name="TgtF_targetfileName" Type="Str">Arduino LDC500 635nm.exe</Property>
 			</Item>
 		</Item>
 	</Item>
