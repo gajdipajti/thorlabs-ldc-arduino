@@ -12,6 +12,7 @@
 		<Property Name="specify.custom.address" Type="Bool">false</Property>
 		<Item Name="ArduinoLDC500GUI.vi" Type="VI" URL="../ArduinoLDC500GUI.vi"/>
 		<Item Name="ArduinoLDCGUI.vi" Type="VI" URL="../ArduinoLDCGUI.vi"/>
+		<Item Name="TemperatureReader.vi" Type="VI" URL="../TemperatureReader.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="8.6CompatibleGlobalVar.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/config.llb/8.6CompatibleGlobalVar.vi"/>
