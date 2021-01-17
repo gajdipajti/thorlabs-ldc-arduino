@@ -1,13 +1,17 @@
-# Three projects inside one github repository:
+# Five projects inside one github repository:
  * Coherent Sapphire 488mW Laser GUI written in LabView
  * Thorlabs LDC205C Arduino controller code and a LabView GUI _(ldc205c)_
  * Thorlabs LDC500 Arduino controller code #2 and a LabView GUI _(ldc500sh)_
+ * A basic temperature reader and LabView GUI _(tds100n)_
+ * An artisan DAC + temperature reader and LabVIEW GUI _(dac999)_
 
 ## Changelog:
  * Initial release with states.
  * It searches for a config file: _Documents\LabVIEW Data\LaserControlSettings.ini_
  * There is also a build.
  * Create the second arduino driver: ldc500sh
+ * Create a basic temperature reader
+ * Create a basic dac based on the ldc500sh circuit and code + add the tds100n functionality to it.
 
 # Graphical User Interface in LabView 2014 (now it is updated to 2017).
 ![](./UI.png)
@@ -79,7 +83,9 @@ Recently we installed a 637nm laser into a second laser head which is controlled
  * sn? -> GET serial (int)
  * ilk? -> GET interlock state (always 0) (only LDC205C)
  * f? -> GET operation fault state (always 0) (only LDC205C)
- * leds? -> GET led status (1: Power on, 7: Laser on) 
+ * leds? -> GET led status (1: Power on, 7: Laser on)
+ * spv[0...255], d[0...255] -> SET PWM Voltage (only DAC999)
+ * gpv?, d? -> GET PWM Voltage (only DAC999, but not working)
 
  ## Second laser, just readout (only LDC205C)
  * j? -> GET laser current (float [mA])
@@ -89,6 +95,9 @@ Recently we installed a 637nm laser into a second laser head which is controlled
  * d? -> GET sensor status (0: error, 1: ok)
  * dt? -> GET temperature (float)
  * dh? -> GET humidity (float)
+
+## Dallas W1 Communication (TDS100n & DAC999)
+ * t? -> GET temperature (float)
 
 # Manufacturer Documentation
  * Cobolt: http://www.cobolt.se/wp-content/uploads/2016/06/D0106-B_Manual-Cobolt-05-01-Series_June_2016.pdf
