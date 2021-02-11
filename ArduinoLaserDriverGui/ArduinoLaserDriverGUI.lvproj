@@ -14,6 +14,8 @@
 		<Item Name="ArduinoLDC500GUI.vi" Type="VI" URL="../ArduinoLDC500GUI.vi"/>
 		<Item Name="ArduinoLDCGUI.vi" Type="VI" URL="../ArduinoLDCGUI.vi"/>
 		<Item Name="TemperatureReader.vi" Type="VI" URL="../TemperatureReader.vi"/>
+		<Item Name="TxtLog.vi" Type="VI" URL="../TxtLog.vi"/>
+		<Item Name="TxtLog2.vi" Type="VI" URL="../TxtLog2.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="8.6CompatibleGlobalVar.vi" Type="VI" URL="/&lt;vilib&gt;/Utility/config.llb/8.6CompatibleGlobalVar.vi"/>
@@ -97,7 +99,7 @@
 				<Property Name="Bld_previewCacheID" Type="Str">{BC4A0212-B70C-4A3A-A9FD-8A369A54F07A}</Property>
 				<Property Name="Bld_supportedLanguage[0]" Type="Str">English</Property>
 				<Property Name="Bld_supportedLanguageCount" Type="Int">1</Property>
-				<Property Name="Bld_version.build" Type="Int">25</Property>
+				<Property Name="Bld_version.build" Type="Int">26</Property>
 				<Property Name="Bld_version.major" Type="Int">2</Property>
 				<Property Name="Destination[0].destName" Type="Str">LDC205.exe</Property>
 				<Property Name="Destination[0].path" Type="Path">../build/Arduino LDC205 GUI for 405nm/LDC205.exe</Property>
@@ -108,7 +110,7 @@
 				<Property Name="Destination[1].path" Type="Path">../build/Arduino LDC205 GUI for 405nm/data</Property>
 				<Property Name="Destination[1].path.type" Type="Str">relativeToProject</Property>
 				<Property Name="DestinationCount" Type="Int">2</Property>
-				<Property Name="Source[0].itemID" Type="Str">{199141AA-D2D0-4F8B-9FEE-00D0A90E8BC3}</Property>
+				<Property Name="Source[0].itemID" Type="Str">{E567DA5C-1A3F-4421-9432-1D5035629902}</Property>
 				<Property Name="Source[0].type" Type="Str">Container</Property>
 				<Property Name="Source[1].destinationIndex" Type="Int">0</Property>
 				<Property Name="Source[1].itemID" Type="Ref">/My Computer/ArduinoLDCGUI.vi</Property>
@@ -127,9 +129,18 @@
 				<Property Name="Source[1].propertiesCount" Type="Int">6</Property>
 				<Property Name="Source[1].sourceInclusion" Type="Str">TopLevel</Property>
 				<Property Name="Source[1].type" Type="Str">VI</Property>
-				<Property Name="SourceCount" Type="Int">2</Property>
+				<Property Name="Source[2].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[2].itemID" Type="Ref">/My Computer/TxtLog.vi</Property>
+				<Property Name="Source[2].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="Source[2].type" Type="Str">VI</Property>
+				<Property Name="Source[3].destinationIndex" Type="Int">0</Property>
+				<Property Name="Source[3].itemID" Type="Ref">/My Computer/TxtLog2.vi</Property>
+				<Property Name="Source[3].sourceInclusion" Type="Str">Include</Property>
+				<Property Name="Source[3].type" Type="Str">VI</Property>
+				<Property Name="SourceCount" Type="Int">4</Property>
 				<Property Name="TgtF_companyName" Type="Str">Advanced Optical Imaging Group</Property>
-				<Property Name="TgtF_fileDescription" Type="Str">Arduino LDC205 GUI for 405nm and 450nm</Property>
+				<Property Name="TgtF_fileDescription" Type="Str">Arduino LDC205 GUI for 405nm and 450nm
+Also works with the TinyLDC85</Property>
 				<Property Name="TgtF_internalName" Type="Str">Arduino LDC205 GUI for 405nm</Property>
 				<Property Name="TgtF_legalCopyright" Type="Str">Copyright © 2018 University of Szeged</Property>
 				<Property Name="TgtF_productName" Type="Str">Arduino LDC205 GUI</Property>
