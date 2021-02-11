@@ -1,9 +1,10 @@
-# Five projects inside one github repository:
+# Six projects inside one github repository:
  * Coherent Sapphire 488mW Laser GUI written in LabView
  * Thorlabs LDC205C Arduino controller code and a LabView GUI _(ldc205c)_
  * Thorlabs LDC500 Arduino controller code #2 and a LabView GUI _(ldc500sh)_
  * A basic temperature reader and LabView GUI _(tds100n)_
  * An artisan DAC + temperature reader and LabVIEW GUI _(dac999)_
+ * Thorlabs LDC205C ATTiny85 based controller which works with the LDC205C LabView GUI _(tinyldc85)_
 
 ## Changelog:
  * Initial release with states.
@@ -98,6 +99,15 @@ Recently we installed a 637nm laser into a second laser head which is controlled
 
 ## Dallas W1 Communication (TDS100n & DAC999)
  * t? -> GET temperature (float)
+
+### Start Here for ATTiny85 Controller LDC205 edition.
+ * This is a cheaper version, because after 6 years the initial Arduino Uno based board died.
+ * I will upload the fritzing schematic.
+ * Arduino IDE Support: https://github.com/SpenceKonde/ATTinyCore
+ * [ATTinyx5 documentation](https://github.com/SpenceKonde/ATTinyCore/blob/master/avr/extras/ATtiny_x5.md)
+ * An Arduino UNO was used as an Arduino ISP to upload the code without a bootloader.
+ * The commands are identical, works with previous LDC205C LabView GUI.
+ * I use an FTD1232 board for USB-to-SERIAL.
 
 # Manufacturer Documentation
  * Cobolt: http://www.cobolt.se/wp-content/uploads/2016/06/D0106-B_Manual-Cobolt-05-01-Series_June_2016.pdf
