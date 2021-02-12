@@ -1,8 +1,8 @@
 /*
-  A Controller for the Thorlabs LDC205C/LDC500 series equipment using an ATtiny85.
+  A Controller for the Thorlabs LDC205C/LDC500 series equipment using an ATTiny85.
   LDC205C: https://www.thorlabs.com/thorproduct.cfm?partnumber=LDC205C
   LDC500:  https://www.thorlabs.com/thorproduct.cfm?partnumber=LDC500
-  ATtiny85 source: https://github.com/SpenceKonde/ATTinyCore
+  ATTiny85 source for Arduino IDE integration: https://github.com/SpenceKonde/ATTinyCore
   
   Main Functions:
     * ENABLE/DISABLE Laser  -> PIN_B2 + LED
@@ -11,7 +11,7 @@
     * GET AVR Internal Temperature -> t?
   LDC205C -> k=50mA/V
   
-  Commands Cobolt Gen5 style + minor changes for the second laser and the DHT22 sensor.
+  Commands Cobolt Gen5 style + minor changes.
   
   Power fit: P=AI+b
   B1 (y-intercept) = 2,158048764451327e+01 +/- 8,999878654085594e-02
@@ -56,12 +56,14 @@ String inputString = "";         // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
 
 void setup() {
-  pinMode(laserREM, OUTPUT);
-  pinMode(laserMod, OUTPUT);
+  pinMode(laserREM, OUTPUT);    // Set laser ON/OFF to output
+  pinMode(laserMod, OUTPUT);    // Set the PWM pin to output
+  pinMode(laser1CTL, INPUT);    // Set ADC pin to input
 
   digitalWrite(laserREM, HIGH);   // turn the LED on (HIGH is the voltage level)
   
-  Serial.begin(115200);
+  // Serial.begin(115200);         // Works with 16 MHz (PPL) clock source. It is noisy.
+  Serial.begin(9600);           // Recommended for 8 MHz internal oscillator.
   // reserve 200 bytes for the inputString:
   inputString.reserve(200);
   
