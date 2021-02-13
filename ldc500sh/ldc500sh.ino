@@ -46,6 +46,7 @@ void setup() {
   Serial.begin(115200);
   pinMode(laserSH, OUTPUT);
   pinMode(laserMod, OUTPUT);
+  pinMode(laser1CTL, INPUT);
 //  while (!Serial) {
 //    ; // wait for serial port to connect. Needed for native USB
 //  }
@@ -58,9 +59,7 @@ void setup() {
 
 void setCurrent(float i) {
   int iDigit = iA0*i*i + iB0*i + iC0;
-  if (iDigit > pwmLimit) { iDigit = 170; }
-  if (iDigit < 0) { iDigit = 0; }
-  analogWrite(laserMod, iDigit);
+  analogWrite(laserMod, constrain(iDigit, 0, 170));
   Serial.println("OK\r");
 }
 

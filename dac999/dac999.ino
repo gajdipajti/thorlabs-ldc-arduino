@@ -64,9 +64,7 @@ void setup() {
 
 void setDirect(float i) {
   int iDigit = i;
-  if (iDigit > pwmLimit) { iDigit = 255; }
-  if (iDigit < 0) { iDigit = 0; }
-  analogWrite(laserMod, iDigit);
+  analogWrite(laserMod, constrain(iDigit, 0, 255));
   Serial.println("OK\r");
 }
 
