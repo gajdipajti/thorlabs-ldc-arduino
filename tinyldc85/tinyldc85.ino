@@ -43,31 +43,30 @@ const float A=0.69790887;
 const float B=21.5804876;
 
 // They both use the same modulation coefficient, but it is better to keep them separated.
-const float kLDC205 = 50.0; // mA/V
-const float iConst = 1.535;   // for 1 laser driver
+const float kLDC205 = 50.0;     // mA/V
+const float iConst = 1.535;     // for single laser driver
 
 const int laserREM = PIN_B2;
 const int laserMod = PIN_B4;
-const int laser1CTL = A3;    // 405nm laser in the LDC205
+const int laser1CTL = A3;       // 405nm laser in the LDC205
 
-boolean interlock = false;   // for future interlock feature
+boolean interlock = false;      // for future interlock feature
 
-String inputString = "";         // a string to hold incoming data
-boolean stringComplete = false;  // whether the string is complete
+String inputString = "";        // a string to hold incoming data
+boolean stringComplete = false; // whether the string is complete
 
 void setup() {
   pinMode(laserREM, OUTPUT);    // Set laser ON/OFF to output
   pinMode(laserMod, OUTPUT);    // Set the PWM pin to output
   pinMode(laser1CTL, INPUT);    // Set ADC pin to input
 
-  digitalWrite(laserREM, HIGH);   // turn the LED on (HIGH is the voltage level)
+  digitalWrite(laserREM, HIGH); // turn the LED on (HIGH is the voltage level)
   
-  // Serial.begin(115200);         // Works with 16 MHz (PPL) clock source. It is noisy.
+  // Serial.begin(115200);      // Works with 16 MHz (PPL) clock source. It is noisy.
   Serial.begin(9600);           // Recommended for 8 MHz internal oscillator.
-  // reserve 200 bytes for the inputString:
-  inputString.reserve(200);
+  inputString.reserve(128);     // reserve 128 bytes for the inputString, we use small commands.
   
-  digitalWrite(laserREM, LOW);    // turn the LED off by making the voltage LOW
+  digitalWrite(laserREM, LOW);  // turn the LED off by making the voltage LOW
 }
 
 void setCurrent(float i) {
@@ -107,14 +106,18 @@ void loop() {
       int leds = 1+digitalRead(laserREM)*6;
       Serial.println(leds);
     } else if (inputString.startsWith("l")) {   //  Laser ENABLE/DISABLE/STATE
-      if (inputString.substring(1,2) == "0") {
-        digitalWrite(laserREM,LOW);
-        Serial.println("OK\r");
-      } else if (inputString.substring(1,2) == "1") {
-        digitalWrite(laserREM,HIGH);
-        Serial.println("OK\r");
-      } else if (inputString.substring(1,2) == "?") {
-        Serial.println(digitalRead(laserREM));
+      switch (inputString.charAt(1)) {
+        case '0':
+          digitalWrite(laserREM,LOW);
+          Serial.println("OK\r"); break;
+        case '1':
+          digitalWrite(laserREM,HIGH);
+          Serial.println("OK\r"); break;
+        case '?':
+          Serial.println(digitalRead(laserREM)); break;
+        default:
+          digitalWrite(laserREM,!digitalRead(laserREM));
+          Serial.println("OK\r"); break;
       }
     } else if (inputString.startsWith("i?")) {  //  Drive Current GET
       Serial.println(getCurrent());
@@ -145,27 +148,7 @@ void loop() {
     } else if (inputString.startsWith("?"))  {    // Are you there? Returns Ok (undocumented Cobolt command)
       Serial.println("OK");
     } else if (inputString.startsWith("t?")) {    // Just print the internal temperature's ADC value, and a crude calibration.
-      Serial.println(analogRead(ADC_TEMPERATURE)*At+Bt);
-    } else if (inputString.startsWith("@cob")) {  // Cobolt controller commands (some are undocumented)
-      if (inputString.substring(4,5) == "0") {
-        digitalWrite(laserREM,LOW);
-        Serial.println("OK\r");
-      } else if (inputString.substring(4,5) == "1") {       // Laser ON after interlock.
-        digitalWrite(laserREM,HIGH);
-        Serial.println("OK\r");
-      } else if (inputString.substring(4,7) == "as?") {     // Get autostart enable state.
-        Serial.println("0");
-      } else if (inputString.substring(4,9) == "asdr?") {   // Get direct input enable state.
-        Serial.println("0");
-      } else if (inputString.substring(4,9) == "asks?") {   // Get key switch state.
-        Serial.println("1");
-      } else if (inputString.substring(4,9) == "asky?") {   // Get key switch enable state.
-     
-        Serial.println("1");
-      } else {
-        Serial.print("Syntax Error: ");
-        Serial.println(inputString);
-      }    
+      Serial.println(analogRead(ADC_TEMPERATURE)*At+Bt);  
     } else {
       Serial.print("Syntax Error: ");
       Serial.println(inputString);

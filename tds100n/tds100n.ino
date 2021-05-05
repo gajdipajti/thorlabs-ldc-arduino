@@ -2,30 +2,26 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-// Data wire is plugged into port 2 on the Arduino
-#define ONE_WIRE_BUS 2
+#define ONE_WIRE_BUS 2              // Data wire is plugged into port 2 on the Arduino
 
 // Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
 OneWire oneWire(ONE_WIRE_BUS);
-
-// Pass our oneWire reference to Dallas Temperature. 
-DallasTemperature sensors(&oneWire);
-
-// arrays to hold device address
-DeviceAddress insideThermometer;
-
-/*
- * Setup function. Here we do the basics
- */
+DallasTemperature sensors(&oneWire);// Pass our oneWire reference to Dallas Temperature.
+DeviceAddress insideThermometer;    // arrays to hold device address
 
 // For serial communication.
-String inputString = "";         // a string to hold incoming data
-boolean stringComplete = false;  // whether the string is complete
+String inputString = "";            // a string to hold incoming data
+boolean stringComplete = false;     // whether the string is complete
+
+bool streamMode = false;            // enable stream mode
+// Wait mode
+short waitPeriod = 1000;
+unsigned long startWait = 0;
 
 void setup(void)
 {
-  // start serial port
-  Serial.begin(115200);
+  
+  Serial.begin(115200);             // start serial port
 
   // locate devices on the bus
   sensors.begin();
@@ -92,10 +88,22 @@ void loop(void)
   
       // It responds almost immediately. Let's print out the data
       printTemperature(insideThermometer); // Use a simple function to print out the data
+    } else if (inputString.startsWith("stream")) { streamMode = !streamMode;   // Change operation mode.
+
     }
     // clear the string:
     inputString = "";
     stringComplete = false;
+  } else if (streamMode) {
+    // Experimental stream mode, for testing
+    // https://dzone.com/articles/arduino-using-millis-instead-of-delay
+    startWait = millis();
+    sensors.requestTemperatures();
+    printTemperature(insideThermometer);
+    while(abs(millis() - startWait) < waitPeriod) {
+        // Do nothing
+        // If there is a rollover, immediately restart
+    } 
   }
 }
 

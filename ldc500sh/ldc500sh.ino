@@ -53,7 +53,7 @@ void setup() {
   // Change PWM Frequency for Timer2.  f=~31kHZ
   // Copied the relevant part from here: http://playground.arduino.cc/Code/PwmFrequency
   TCCR1B = TCCR1B & 0b11111000 | 0x01;
-  inputString.reserve(200);   // reserve 200 bytes for the inputString:
+  inputString.reserve(128);   // reserve 128 bytes for the inputString:
   digitalWrite(laserSH, HIGH);
 }
 
@@ -95,14 +95,18 @@ void loop() {
       Serial.println(1+digitalRead(laserSH)*6);
     // Laser ENABLE/DISABLE/STATE (shutter actually)
     } else if (inputString.startsWith("l")) {
-      if (inputString.substring(1,2) == "1") {
-        digitalWrite(laserSH,LOW);
-        Serial.println("Laser ON\r");
-      } else if (inputString.substring(1,2) == "0") {
-        digitalWrite(laserSH,HIGH);
-        Serial.println("Laser OFF\r");
-      } else if (inputString.substring(1,2) == "?") {
-        Serial.println(!digitalRead(laserSH));
+      switch (inputString.charAt(1)) {
+        case '0':
+          digitalWrite(laserSH,LOW);
+          Serial.println("OK\r"); break;
+        case '1':
+          digitalWrite(laserSH,HIGH);
+          Serial.println("OK\r"); break;
+        case '?':
+          Serial.println(digitalRead(laserSH)); break;
+        default:
+          digitalWrite(laserSH,!digitalRead(laserSH));
+          Serial.println("OK\r"); break;
       }
     // Drive Current GET
     } else if (inputString.startsWith("i?")) {

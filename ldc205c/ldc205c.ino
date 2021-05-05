@@ -77,8 +77,8 @@ void setup() {
   // Copied the relevant part from here: http://playground.arduino.cc/Code/PwmFrequency
   TCCR2B = TCCR2B & 0b11111000 | 0x01;
   Serial.begin(115200);
-  // reserve 200 bytes for the inputString:
-  inputString.reserve(200);
+  // reserve 128 bytes for the inputString:
+  inputString.reserve(128);
 }
 
 void setCurrent(float i) {
@@ -138,14 +138,18 @@ void loop() {
       Serial.println(leds);
   //  Laser ENABLE/DISABLE/STATE
     } else if (inputString.startsWith("l")) {
-      if (inputString.substring(1,2) == "0") {
-        digitalWrite(laserREM,LOW);
-        Serial.println("OK\r");
-      } else if (inputString.substring(1,2) == "1") {
-        digitalWrite(laserREM,HIGH);
-        Serial.println("OK\r");
-      } else if (inputString.substring(1,2) == "?") {
-        Serial.println(digitalRead(laserREM));
+      switch (inputString.charAt(1)) {
+        case '0':
+          digitalWrite(laserREM,LOW);
+          Serial.println("OK\r"); break;
+        case '1':
+          digitalWrite(laserREM,HIGH);
+          Serial.println("OK\r"); break;
+        case '?':
+          Serial.println(digitalRead(laserREM)); break;
+        default:
+          digitalWrite(laserREM,!digitalRead(laserREM));
+          Serial.println("OK\r"); break;
       }
 //  Drive Current GET1
     } else if (inputString.startsWith("i?")) {
@@ -259,4 +263,3 @@ void serialEvent() {
     } 
   }
 }
-
